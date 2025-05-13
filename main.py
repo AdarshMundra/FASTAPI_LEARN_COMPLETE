@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from typing import Optional
 
 app = FastAPI()
 
@@ -7,8 +8,10 @@ def read_root():
     return {"data":"Blog list"}
 
 @app.get("/blog")
-def blog():
-    return {"data":"Blog list"}
+def blog(limit:int =10,published:bool = True, sort : Optional['str']=None):
+    if published:
+        return {"data":f"{limit} blog from Published Blog list"}  
+    return {"data":f"{limit} blog from Unpublished Blog list"}
 
 @app.get("/blog/unpublished")
 def blog():

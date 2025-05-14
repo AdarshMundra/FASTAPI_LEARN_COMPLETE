@@ -1,5 +1,7 @@
 from fastapi import FastAPI 
-import schemas
+import schemas,models
+
+from database import engine
 # from . import schemas
 import uvicorn
 
@@ -8,6 +10,7 @@ app = FastAPI()
 
 
 
+models.Base.metadata.create_all(engine)
 @app.get('/')
 def index():
     return {'data': {'name': 'Blog List'}}

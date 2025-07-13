@@ -23,7 +23,7 @@ def index():
     return {'data': {'name': 'Blog List'}}
 
 
-@app.post('/create',response_model=schemas.ShowUser, status_code=status.HTTP_201_CREATED,tags=['user'])
+@app.post('/create',response_model=schemas.ShowUser, status_code=status.HTTP_201_CREATED,tags=['users'])
 def create_user(request: schemas.User,db: Session = Depends(get_db)):
     hashedPassword = hashing.Hash.bcrypt(request.password)
     user= models.User(name=request.name, email=request.email, password=hashedPassword)
@@ -32,11 +32,11 @@ def create_user(request: schemas.User,db: Session = Depends(get_db)):
     db.refresh(user)
     return user
 
-@app.get('/user/',tags=['user'])
+@app.get('/user/',tags=['users'])
 def all_users(db: Session = Depends(get_db)):
     return db.query(models.User).all()
 
-@app.get('/user/{id}', response_model=schemas.ShowUser,tags=['user'])
+@app.get('/user/{id}', response_model=schemas.ShowUser,tags=['users'])
 def get_user(id:int, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == id).first()
     if not user:
@@ -83,7 +83,7 @@ def destroy(id:int,db: Session = Depends(get_db)):
 
 @app.post('/blog',tags=['Blogs'])
 def create_blog(request: schemas.Blog, db:Session = Depends(get_db)):
-    new_blog = models.Blog(title=request.title, body=request.body,published = request.published)
+    new_blog = models.Blog(title=request.title, body=request.body,user_id=1)
     db.add(new_blog)
     db.commit()
     db.refresh(new_blog)

@@ -1,26 +1,16 @@
-from fastapi import FastAPI, Request , Depends, status,HTTPException
+from fastapi import FastAPI 
 import uvicorn 
-import schemas,models, hashing
-from sqlalchemy.orm import Session
-from database import engine , get_db
-from routers import blog,user
+import models
+from database import engine 
+from routers import blog,user,authentication
 
 
 models.Base.metadata.create_all(engine)
 
-
-
-
-
-
-
 app = FastAPI()
+app.include_router(authentication.router)
 app.include_router(blog.router)
 app.include_router(user.router)
-
-@app.get('/')
-def index():
-    return {'data': {'name': 'Blog List'}}
 
 
 if __name__ == "__main__":

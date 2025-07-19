@@ -23,15 +23,15 @@ class ShowBlog(BaseModel, from_attributes=True):
     body: str
     creator: ShowUser
 
-# class Login(BaseModel):
-#     username: str
-#     password:str
+class Login(BaseModel):
+    username: str
+    password:str
 
 
-# class Token(BaseModel):
-#     access_token: str
-#     token_type: str
+class Token(BaseModel):
+    access_token: str
+    token_type: str
 
 
-# class TokenData(BaseModel):
-#     email: Optional[str] = None
+class TokenData(BaseModel):
+    email: Optional[str] = None
